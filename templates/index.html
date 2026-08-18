@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>No-website lead finder</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <h1>No-website lead finder</h1>
+  <div class="stats" id="stats"></div>
+</header>
+
+<main>
+  <section class="panel">
+    <h2>1. Search an area</h2>
+    <form id="search-form" class="row">
+      <input type="text" id="location" placeholder="e.g. Johannesburg" required>
+      <input type="text" id="category" placeholder="Category (optional) e.g. plumbers">
+      <button type="submit">Search</button>
+    </form>
+    <p class="hint">Pulls listings from Google. Keeps everyone — businesses with no website are "new site" leads, businesses with a website are "revamp" leads. This costs a small amount on your Google Places API billing per search.</p>
+    <p id="search-status" class="status"></p>
+  </section>
+
+  <section class="panel">
+    <h2>2. Leads</h2>
+    <p class="hint">Google doesn't expose email addresses, so add them yourself as you find them (call, check their Facebook page, etc). Use the "find" link to search for it quickly.</p>
+    <div class="tabs" id="lead-tabs">
+      <button type="button" class="tab active" data-filter="no">No website</button>
+      <button type="button" class="tab" data-filter="has">Has website</button>
+      <button type="button" class="tab" data-filter="">All</button>
+    </div>
+    <table id="leads-table">
+      <thead>
+        <tr>
+          <th><input type="checkbox" id="select-all"></th>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Phone</th>
+          <th>Website</th>
+          <th>Links</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody id="leads-body"></tbody>
+    </table>
+  </section>
+
+  <section class="panel">
+    <h2>3. Send a campaign</h2>
+    <p class="hint">Sends only to selected leads that have an email and haven't unsubscribed. Every email gets a footer with your sender details and an unsubscribe link, required by law in most places.</p>
+    <form id="campaign-form">
+      <input type="text" id="subject" placeholder="Subject line" required>
+      <textarea id="body" rows="6" placeholder="Hi {{business_name}}, ..." required></textarea>
+      <p class="hint">Use <code>{{business_name}}</code> in any message, and <code>{{website_url}}</code> when messaging the "Has website" group.</p>
+      <button type="submit" id="send-btn">Send to selected leads</button>
+    </form>
+    <p id="campaign-status" class="status"></p>
+  </section>
+</main>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
